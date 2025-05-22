@@ -47,4 +47,8 @@ public class WeatherAppService {
     public Double getAverageTemperatureLast24h(String cityName) throws SQLException {
         return repository.getAverageTemperatureForCityLast24Hours(cityName);
     }
+
+    public TemperatureStatsDTO getMinMaxTemperatureStatistics() throws SQLException {
+        return repository.getOverallMinMaxTemperatures();
+    }
 }

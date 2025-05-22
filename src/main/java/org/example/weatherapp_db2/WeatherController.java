@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+
 import java.sql.SQLException;
 
 public class WeatherController {
@@ -26,6 +27,12 @@ public class WeatherController {
     private Label statusLabel;
     @FXML
     private Label avgTemperatureLabel;
+    @FXML
+    private Label minTempLabel;
+    @FXML
+    private Label maxTempLabel;
+    @FXML
+    private Button minmaxStatsButton;
 
     private WeatherAppService weatherAppService;
     private String currentDisplayCityName = null; // Speichert den aktuell angezeigten Stadtnamen
@@ -35,8 +42,9 @@ public class WeatherController {
         this.weatherAppService = new WeatherAppService();
         statusLabel.setText("Bitte Stadt eingeben und auf Suchen klicken.");
         clearWeatherInfo();
-        //Button für Durchschnittstemperatur nur aktivieren, wenn eine Stadt erfolgreich geladen wurde
+        //Button für Statistiken nur aktivieren, wenn eine Stadt erfolgreich geladen wurde
         if (showAverageTempButton != null) showAverageTempButton.setDisable(true);
+        if (minmaxStatsButton != null) minmaxStatsButton.setDisable(true);
     }
 
     @FXML
@@ -46,16 +54,13 @@ public class WeatherController {
             statusLabel.setText("Bitte einen Stadtnamen eingeben.");
             clearWeatherInfo();
             currentDisplayCityName = null;
-            if (showAverageTempButton != null) showAverageTempButton.setDisable(true);
             return;
         }
 
         statusLabel.setText("Suche Wetter für " + cityNameFromInput + "...");
         searchButton.setDisable(true);
-        if (showAverageTempButton != null) showAverageTempButton.setDisable(true);
         clearWeatherInfo();
         currentDisplayCityName = null;
-
 
         new Thread(() -> {
             try {
@@ -83,10 +88,57 @@ public class WeatherController {
             } finally {
                 Platform.runLater(() -> {
                     searchButton.setDisable(false);
-                     //Button für Durchschnittstemperatur nur aktivieren, wenn eine Stadt erfolgreich geladen wurde
-                     if (currentDisplayCityName != null && showAverageTempButton != null) {
+                    //Button für Durchschnittstemperatur nur aktivieren, wenn eine Stadt erfolgreich geladen wurde
+                    if (currentDisplayCityName != null && showAverageTempButton != null) {
                         showAverageTempButton.setDisable(false);
-                     }
+                    }
+                    if (currentDisplayCityName != null && minmaxStatsButton != null) {
+                        minmaxStatsButton.setDisable(false);
+                    }
+                });
+            }
+        }).start();
+    }
+
+    @FXML
+    protected void handleShowMinMaxTemperatureStatsAction(ActionEvent event) {
+        if (!DatabaseConfig.DATABASE_ENABLED) { //
+            if (minTempLabel != null) minTempLabel.setText("Min: DB deaktiviert");
+            if (maxTempLabel != null) maxTempLabel.setText("Max: DB deaktiviert");
+            statusLabel.setText("Datenbank ist deaktiviert.");
+            return;
+        }
+
+        if (minTempLabel != null) minTempLabel.setText("Min: Lade...");
+        if (maxTempLabel != null) maxTempLabel.setText("Max: Lade...");
+        if (minmaxStatsButton != null) minmaxStatsButton.setDisable(true);
+
+        new Thread(() -> {
+            try {
+                TemperatureStatsDTO stats = weatherAppService.getMinMaxTemperatureStatistics();
+                Platform.runLater(() -> {
+                    if (stats.hasData()) {
+                        if (minTempLabel != null)
+                            minTempLabel.setText(String.format("Niedrigste Temp. gesamt: %.1f °C", stats.getMinTemperature()));
+                        if (maxTempLabel != null)
+                            maxTempLabel.setText(String.format("Höchste Temp. gesamt: %.1f °C", stats.getMaxTemperature()));
+                        statusLabel.setText("Min/Max Temperaturstatistiken geladen.");
+                    } else {
+                        if (minTempLabel != null) minTempLabel.setText("Min: Keine Daten");
+                        if (maxTempLabel != null) maxTempLabel.setText("Max: Keine Daten");
+                        statusLabel.setText("Keine Min/Max Temperaturdaten in der Datenbank gefunden.");
+                    }
+                });
+            } catch (SQLException e) {
+                e.printStackTrace();
+                Platform.runLater(() -> {
+                    if (minTempLabel != null) minTempLabel.setText("Min: Fehler");
+                    if (maxTempLabel != null) maxTempLabel.setText("Max: Fehler");
+                    statusLabel.setText("Datenbankfehler beim Laden der Min/Max Statistiken.");
+                });
+            } finally {
+                Platform.runLater(() -> {
+                    if (minmaxStatsButton != null) minmaxStatsButton.setDisable(false);
                 });
             }
         }).start();
@@ -133,9 +185,9 @@ public class WeatherController {
                 });
             } finally {
                 // Ggf. Button wieder aktivieren
-                 Platform.runLater(() -> {
+                Platform.runLater(() -> {
                     if (showAverageTempButton != null) showAverageTempButton.setDisable(false);
-                 });
+                });
             }
         }).start();
     }
@@ -145,5 +197,7 @@ public class WeatherController {
         temperatureLabel.setText("");
         descriptionLabel.setText("");
         avgTemperatureLabel.setText("");
+        if (minTempLabel != null) minTempLabel.setText(""); // Neues Label auch leeren
+        if (maxTempLabel != null) maxTempLabel.setText(""); // Neues Label auch leeren
     }
 }

@@ -1,4 +1,4 @@
---Tabellenerstellung:
+-- Tabellenerstellung:
 CREATE TABLE dbo.Kempe_WeatherData (
     LogID INT IDENTITY(1,1) NOT NULL,
     CityName NVARCHAR(100) NOT NULL,
@@ -11,7 +11,7 @@ CREATE TABLE dbo.Kempe_WeatherData (
 GO
 
 ------------------------------------------------------------------------------------
---Stored Procedure:
+-- Stored Procedure:
 -- Überprüfen, ob die Prozedur bereits existiert, und sie ggf. löschen
     IF OBJECT_ID('dbo.Kempe_InsertWeatherData', 'P') IS NOT NULL
         DROP PROCEDURE dbo.Kempe_InsertWeatherData;
@@ -56,7 +56,7 @@ GO
     GO
 
 ------------------------------------------------------------------------------------
---Function:
+-- Function:
 -- Überprüfen, ob die Funktion bereits existiert, und sie ggf. löschen
 IF OBJECT_ID('dbo.Kempe_GetAverageTemperatureForCityLast24Hours', 'FN') IS NOT NULL
 DROP FUNCTION dbo.Kempe_GetAverageTemperatureForCityLast24Hours;
@@ -82,3 +82,35 @@ END
 GO
 
 ------------------------------------------------------------------------------------
+-- Stored Procedure:
+-- Überprüfen, ob die Prozedur bereits existiert, und sie ggf. löschen
+IF OBJECT_ID('dbo.Kempe_GetMinMaxTemperatures', 'P') IS NOT NULL
+DROP PROCEDURE dbo.Kempe_GetMinMaxTemperatures;
+GO
+
+-- Erstellen der Stored Procedure
+CREATE PROCEDURE dbo.Kempe_GetMinMaxTemperatures
+    @CityName NVARCHAR(100),
+    @MinTemperature DECIMAL(5, 2) OUTPUT,
+    @MaxTemperature DECIMAL(5, 2) OUTPUT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+SELECT
+    @MinTemperature = MIN(TemperatureCelsius),
+    @MaxTemperature = MAX(TemperatureCelsius)
+FROM
+    dbo.Kempe_WeatherData wd
+WHERE
+    wd.CityName = @CityName;
+
+-- Fallbehandlung, wenn die Tabelle leer ist
+IF @MinTemperature IS NULL AND @MaxTemperature IS NULL
+BEGIN
+        -- Setze auf einen Indikatorwert oder lasse sie NULL, je nach Fehlerbehandlung im Java-Code
+        -- Hier lassen wir sie NULL, Java muss das behandeln.
+        PRINT 'WeatherData table is empty or contains no temperature data.';
+END
+END
+GO

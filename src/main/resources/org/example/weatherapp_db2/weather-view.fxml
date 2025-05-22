@@ -8,88 +8,104 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:controller="org.example.weatherapp_db2.WeatherController"
-      alignment="TOP_CENTER" spacing="20.0"
-      style="-fx-padding: 20; -fx-background-color: #f0f4f7;"
-      prefWidth="500" prefHeight="450" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="TOP_CENTER" prefHeight="550" prefWidth="500" spacing="15.0" style="-fx-padding: 20; -fx-background-color: #f0f4f7;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1" fx:controller="org.example.weatherapp_db2.WeatherController"> <Label text="Wetter App" textFill="#2c3e50">
+    <font>
+        <Font name="Arial Bold" size="28.0" />
+    </font>
+</Label>
 
-    <Label text="Wetter App" textFill="#2c3e50">
-        <font>
-            <Font name="Arial Bold" size="28.0"/>
-        </font>
-    </Label>
-
-    <HBox spacing="10.0" alignment="CENTER">
-        <TextField fx:id="cityInputField" promptText="Stadtnamen eingeben..." HBox.hgrow="ALWAYS" prefWidth="300">
+    <HBox alignment="CENTER" spacing="10.0">
+        <TextField fx:id="cityInputField" prefWidth="300" promptText="Stadtnamen eingeben..." HBox.hgrow="ALWAYS">
             <font>
-                <Font size="14.0"/>
+                <Font size="14.0" />
             </font>
         </TextField>
-        <Button fx:id="searchButton" text="Wetter suchen" onAction="#handleSearchButtonAction" style="-fx-background-color: #3498db; -fx-text-fill: white;">
+        <Button fx:id="searchButton" onAction="#handleSearchButtonAction" style="-fx-background-color: #3498db; -fx-text-fill: white;" text="Wetter suchen">
             <font>
-                <Font name="Arial Bold" size="14.0"/>
+                <Font name="Arial Bold" size="14.0" />
             </font>
         </Button>
     </HBox>
 
-    <VBox spacing="10.0" style="-fx-padding: 15; -fx-background-color: #ffffff; -fx-background-radius: 8; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 5, 5);" VBox.vgrow="ALWAYS">
+    <VBox spacing="10.0" style="-fx-padding: 15; -fx-background-color: #ffffff; -fx-background-radius: 8; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 5, 5);" VBox.vgrow="SOMETIMES">
         <Label text="Aktuelles Wetter:" textFill="#34495e">
             <font>
-                <Font name="Arial Bold" size="18.0"/>
+                <Font name="Arial Bold" size="18.0" />
             </font>
             <VBox.margin>
-                <Insets bottom="10.0"/>
+                <Insets bottom="10.0" />
             </VBox.margin>
         </Label>
         <Label fx:id="cityNameLabel" textFill="#2980b9">
             <font>
-                <Font name="Arial Italic" size="16.0"/>
+                <Font name="Arial Italic" size="16.0" />
             </font>
         </Label>
         <Label fx:id="temperatureLabel" textFill="#34495e">
             <font>
-                <Font size="15.0"/>
+                <Font size="15.0" />
             </font>
         </Label>
         <Label fx:id="descriptionLabel" textFill="#34495e">
             <font>
-                <Font size="15.0"/>
+                <Font size="15.0" />
             </font>
         </Label>
     </VBox>
 
-    <VBox spacing="10.0" style="-fx-padding: 15; -fx-background-color: #ffffff; -fx-background-radius: 8; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 5, 5);">
-        <Label text="Statistiken:" textFill="#34495e">
-            <font>
-                <Font name="Arial Bold" size="18.0"/>
-            </font>
+    <VBox spacing="10.0" style="-fx-padding: 15; -fx-background-color: #ffffff; -fx-background-radius: 8; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 5, 5);" VBox.vgrow="SOMETIMES">
+        <Label text="Statistiken (Lokal and Global):" textFill="#34495e"> <font>
+            <Font name="Arial Bold" size="18.0" />
+        </font>
             <VBox.margin>
-                <Insets bottom="10.0"/>
+                <Insets bottom="10.0" />
             </VBox.margin>
         </Label>
-        <Button fx:id="showAverageTempButton" text="Durchschnittstemperatur (24h) anzeigen" onAction="#handleShowAverageTemperatureAction"
-                style="-fx-background-color: #2ecc71; -fx-text-fill: white;" prefWidth="Infinity">
+        <Button fx:id="showAverageTempButton" onAction="#handleShowAverageTemperatureAction" prefWidth="Infinity" style="-fx-background-color: #2ecc71; -fx-text-fill: white;" text="Durchschnittstemperatur Stadt (24h)">
             <font>
-                <Font name="Arial Bold" size="14.0"/>
+                <Font name="Arial Bold" size="14.0" />
             </font>
         </Button>
         <Label fx:id="avgTemperatureLabel" textFill="#34495e">
             <font>
-                <Font size="15.0"/>
+                <Font size="15.0" />
             </font>
             <padding>
-                <Insets top="5.0"/>
+                <Insets bottom="10.0" top="5.0" /> </padding>
+        </Label>
+
+        <Button fx:id="minmaxStatsButton" onAction="#handleShowMinMaxTemperatureStatsAction" prefWidth="Infinity" style="-fx-background-color: #e67e22; -fx-text-fill: white;" text="Min/Max Temperatur anzeigen">
+            <font>
+                <Font name="Arial Bold" size="14.0" />
+            </font>
+            <VBox.margin>
+                <Insets top="5.0" />
+            </VBox.margin>
+        </Button>
+        <Label fx:id="minTempLabel" textFill="#34495e">
+            <font>
+                <Font size="15.0" />
+            </font>
+            <padding>
+                <Insets top="5.0" />
+            </padding>
+        </Label>
+        <Label fx:id="maxTempLabel" textFill="#34495e">
+            <font>
+                <Font size="15.0" />
+            </font>
+            <padding>
+                <Insets top="5.0" />
             </padding>
         </Label>
     </VBox>
 
-    <Label fx:id="statusLabel" text="Statusmeldungen hier..." textFill="#7f8c8d" wrapText="true">
+    <Label fx:id="statusLabel" text="Statusmeldungen hier..." textFill="#7f8c8d" wrapText="true" VBox.vgrow="NEVER">
         <font>
-            <Font size="13.0"/>
+            <Font size="13.0" />
         </font>
         <padding>
-            <Insets top="10.0"/>
+            <Insets top="10.0" />
         </padding>
     </Label>
-
 </VBox>
