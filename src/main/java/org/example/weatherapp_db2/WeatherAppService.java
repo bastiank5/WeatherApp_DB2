@@ -38,17 +38,11 @@ public class WeatherAppService {
         }
     }
 
-    /**
-     * Ruft die Durchschnittstemperatur für eine Stadt der letzten 24 Stunden aus der Datenbank ab.
-     * @param cityName Der Name der Stadt.
-     * @return Die Durchschnittstemperatur oder null, wenn keine Daten vorhanden sind.
-     * @throws SQLException Bei Datenbankfehlern.
-     */
     public Double getAverageTemperatureLast24h(String cityName) throws SQLException {
         return repository.getAverageTemperatureForCityLast24Hours(cityName);
     }
 
-    public TemperatureStatsDTO getMinMaxTemperatureStatistics() throws SQLException {
-        return repository.getOverallMinMaxTemperatures();
+    public TemperatureStatsDTO getMinMaxTemperatureStatistics(String cityName) throws SQLException {
+        return repository.getOverallMinMaxTemperatures(cityName);
     }
 }

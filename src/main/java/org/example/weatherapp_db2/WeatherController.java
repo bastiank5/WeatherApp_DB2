@@ -68,7 +68,7 @@ public class WeatherController {
                 Platform.runLater(() -> {
                     if (weatherData != null) {
                         cityNameLabel.setText("Wetter in: " + weatherData.getCityName());
-                        temperatureLabel.setText("Temperatur: " + String.format("%.1f", weatherData.getTemperature()) + " °C");
+                        temperatureLabel.setText("Temperatur: " + String.format("%.2f", weatherData.getTemperature()) + " °C");
                         descriptionLabel.setText("Beschreibung: " + weatherData.getWeatherDescription());
                         statusLabel.setText("Wetterdaten erfolgreich abgerufen.");
                         currentDisplayCityName = weatherData.getCityName(); // Stadtname für spätere Verwendung speichern
@@ -101,44 +101,52 @@ public class WeatherController {
     }
 
     @FXML
-    protected void handleShowMinMaxTemperatureStatsAction(ActionEvent event) {
+    protected void handleShowMinMaxTemperatureStatsAction(ActionEvent event) { // Oder neuer Name, z.B. handleShowCityMinMaxTempAction
+        if (currentDisplayCityName == null || currentDisplayCityName.trim().isEmpty()) {
+            statusLabel.setText("Zuerst erfolgreich Wetterdaten für eine Stadt abrufen, um deren Min/Max anzuzeigen.");
+            if (minTempLabel != null) minTempLabel.setText("Min: Stadt wählen");
+            if (maxTempLabel != null) maxTempLabel.setText("Max: Stadt wählen");
+            return;
+        }
+
         if (!DatabaseConfig.DATABASE_ENABLED) { //
-            if (minTempLabel != null) minTempLabel.setText("Min: DB deaktiviert");
-            if (maxTempLabel != null) maxTempLabel.setText("Max: DB deaktiviert");
+            if (minTempLabel != null) minTempLabel.setText("Min (Overall): DB deaktiviert");
+            if (maxTempLabel != null) maxTempLabel.setText("Max (Overall): DB deaktiviert");
             statusLabel.setText("Datenbank ist deaktiviert.");
             return;
         }
 
-        if (minTempLabel != null) minTempLabel.setText("Min: Lade...");
-        if (maxTempLabel != null) maxTempLabel.setText("Max: Lade...");
-        if (minmaxStatsButton != null) minmaxStatsButton.setDisable(true);
+        final String cityForStats = currentDisplayCityName; // Finale Kopie für Lambda
+
+        if (minTempLabel != null) minTempLabel.setText("Min (Overall): Lade...");
+        if (maxTempLabel != null) maxTempLabel.setText("Max (Overall): Lade...");
+        if (minmaxStatsButton != null) minmaxStatsButton.setDisable(true); // Name des Buttons ggf. anpassen
 
         new Thread(() -> {
             try {
-                TemperatureStatsDTO stats = weatherAppService.getMinMaxTemperatureStatistics();
+                // Aufruf der angepassten Service-Methode
+                TemperatureStatsDTO stats = weatherAppService.getMinMaxTemperatureStatistics(cityForStats);
                 Platform.runLater(() -> {
                     if (stats.hasData()) {
-                        if (minTempLabel != null)
-                            minTempLabel.setText(String.format("Niedrigste Temp. gesamt: %.1f °C", stats.getMinTemperature()));
-                        if (maxTempLabel != null)
-                            maxTempLabel.setText(String.format("Höchste Temp. gesamt: %.1f °C", stats.getMaxTemperature()));
-                        statusLabel.setText("Min/Max Temperaturstatistiken geladen.");
+                        if (minTempLabel != null) minTempLabel.setText(String.format("Niedrigste Temp. (Overall): %.2f °C", stats.getMinTemperature()));
+                        if (maxTempLabel != null) maxTempLabel.setText(String.format("Höchste Temp. (Overall): %.2f °C", stats.getMaxTemperature()));
+                        statusLabel.setText("Min/Max Temperatur für " + cityForStats + " geladen.");
                     } else {
-                        if (minTempLabel != null) minTempLabel.setText("Min: Keine Daten");
-                        if (maxTempLabel != null) maxTempLabel.setText("Max: Keine Daten");
-                        statusLabel.setText("Keine Min/Max Temperaturdaten in der Datenbank gefunden.");
+                        if (minTempLabel != null) minTempLabel.setText("Min (" + cityForStats + "): Keine Daten");
+                        if (maxTempLabel != null) maxTempLabel.setText("Max (" + cityForStats + "): Keine Daten");
+                        statusLabel.setText("Keine Temperaturdaten für " + cityForStats + " in der Datenbank gefunden.");
                     }
                 });
             } catch (SQLException e) {
                 e.printStackTrace();
                 Platform.runLater(() -> {
-                    if (minTempLabel != null) minTempLabel.setText("Min: Fehler");
-                    if (maxTempLabel != null) maxTempLabel.setText("Max: Fehler");
-                    statusLabel.setText("Datenbankfehler beim Laden der Min/Max Statistiken.");
+                    if (minTempLabel != null) minTempLabel.setText("Min (Overall): Fehler");
+                    if (maxTempLabel != null) maxTempLabel.setText("Max (Overall): Fehler");
+                    statusLabel.setText("Datenbankfehler beim Laden der Min/Max für " + cityForStats + ".");
                 });
             } finally {
                 Platform.runLater(() -> {
-                    if (minmaxStatsButton != null) minmaxStatsButton.setDisable(false);
+                    if (minmaxStatsButton != null) minmaxStatsButton.setDisable(false); // Name des Buttons ggf. anpassen
                 });
             }
         }).start();
@@ -170,7 +178,7 @@ public class WeatherController {
                 Double avgTemp = weatherAppService.getAverageTemperatureLast24h(cityName);
                 Platform.runLater(() -> {
                     if (avgTemp != null) {
-                        avgTemperatureLabel.setText("Durchschnitt (24h): " + String.format("%.1f", avgTemp) + " °C");
+                        avgTemperatureLabel.setText("Durchschnitt (24h): " + String.format("%.2f", avgTemp) + " °C");
                         statusLabel.setText("Durchschnittstemperatur für " + cityName + " geladen.");
                     } else {
                         avgTemperatureLabel.setText("Durchschnitt (24h): Keine Daten verfügbar.");

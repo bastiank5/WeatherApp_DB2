@@ -75,8 +75,14 @@ public class WeatherRepository {
         return averageTemp;
     }
 
-    public TemperatureStatsDTO getOverallMinMaxTemperatures() throws SQLException {
+    public TemperatureStatsDTO getOverallMinMaxTemperatures(String cityName) throws SQLException {
 
+        if (!DatabaseConfig.DATABASE_ENABLED) { //
+            System.out.println("INFO: Datenbankinteraktionen deaktiviert. Min/Max Temperaturen für " + cityName + " werden nicht abgerufen.");
+            return new TemperatureStatsDTO(null, null);
+        }
+
+        // Stelle sicher, dass der Name der SP hier korrekt ist (Kempe_GetMinMaxTemperatures)
         String sql = "{CALL dbo.Kempe_GetMinMaxTemperatures(?, ?, ?)}";
         Double minTemp = null;
         Double maxTemp = null;
@@ -85,22 +91,22 @@ public class WeatherRepository {
              CallableStatement stmt = conn.prepareCall(sql)) {
 
             if (conn == null) {
-                System.err.println("WARNUNG: Konnte keine Datenbankverbindung für getOverallMinMaxTemperatures erhalten. Gebe null/null zurück.");
+                System.err.println("WARNUNG: Konnte keine Datenbankverbindung für getTemperaturesForCity erhalten. Gebe null/null zurück.");
                 return new TemperatureStatsDTO(null, null);
             }
 
-            stmt.setString(1, ""); // Leerer String, da laut SQL alle Temperaturen abgefragt werden sollen
-            stmt.registerOutParameter(2, Types.DECIMAL); // @MinTemperature
-            stmt.registerOutParameter(3, Types.DECIMAL); // @MaxTemperature
+            stmt.setString(1, cityName); // INPUT Parameter: @CityName
+            stmt.registerOutParameter(2, Types.DECIMAL); // OUTPUT Parameter: @MinTemperature
+            stmt.registerOutParameter(3, Types.DECIMAL); // OUTPUT Parameter: @MaxTemperature
 
             stmt.execute();
 
-            // Korrekte Zuordnung der Ausgabeparameter
+            // BigDecimal verwenden, um Präzisionsverlust zu vermeiden und NULL korrekt zu behandeln
             minTemp = stmt.getBigDecimal(2) != null ? stmt.getBigDecimal(2).doubleValue() : null;
             maxTemp = stmt.getBigDecimal(3) != null ? stmt.getBigDecimal(3).doubleValue() : null;
 
         } catch (SQLException e) {
-            System.err.println("Datenbankfehler beim Abrufen der Min/Max Temperaturen: " + e.getMessage());
+            System.err.println("Datenbankfehler beim Abrufen der Min/Max Temperaturen für Stadt " + cityName + ": " + e.getMessage());
             throw e;
         }
         return new TemperatureStatsDTO(minTemp, maxTemp);
