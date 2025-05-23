@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eclipse-userlibraries>
+  <library name="Maven: org.openjfx:javafx-fxml:21">
+    <archive path="C:/Users/Bastian/.m2/repository/org/openjfx/javafx-fxml/21/javafx-fxml-21.jar" />
+  </library>
+  <library name="Maven: org.openjfx:javafx-controls:21">
+    <archive path="C:/Users/Bastian/.m2/repository/org/openjfx/javafx-controls/21/javafx-controls-21.jar" />
+  </library>
+  <library name="Maven: io.github.cdimascio:dotenv-java:2.3.0">
+    <archive path="C:/Users/Bastian/.m2/repository/io/github/cdimascio/dotenv-java/2.3.0/dotenv-java-2.3.0.jar" />
+  </library>
+  <library name="Maven: com.microsoft.sqlserver:mssql-jdbc:12.6.1.jre11">
+    <archive path="C:/Users/Bastian/.m2/repository/com/microsoft/sqlserver/mssql-jdbc/12.6.1.jre11/mssql-jdbc-12.6.1.jre11.jar" />
+  </library>
+  <library name="Maven: org.json:json:20231013">
+    <archive path="C:/Users/Bastian/.m2/repository/org/json/json/20231013/json-20231013.jar" />
+  </library>
+  <library name="Maven: eu.hansolo:tilesfx:21.0.3">
+    <archive path="C:/Users/Bastian/.m2/repository/eu/hansolo/tilesfx/21.0.3/tilesfx-21.0.3.jar" />
+  </library>
+  <library name="Maven: org.kordamp.bootstrapfx:bootstrapfx-core:0.4.0">
+    <archive path="C:/Users/Bastian/.m2/repository/org/kordamp/bootstrapfx/bootstrapfx-core/0.4.0/bootstrapfx-core-0.4.0.jar" />
+  </library>
+  <library name="Maven: net.synedra:validatorfx:0.5.0">
+    <archive path="C:/Users/Bastian/.m2/repository/net/synedra/validatorfx/0.5.0/validatorfx-0.5.0.jar" />
+  </library>
+  <library name="Maven: org.controlsfx:controlsfx:11.2.1">
+    <archive path="C:/Users/Bastian/.m2/repository/org/controlsfx/controlsfx/11.2.1/controlsfx-11.2.1.jar" />
+  </library>
+  <library name="Maven: org.openjfx:javafx-swing:21">
+    <archive path="C:/Users/Bastian/.m2/repository/org/openjfx/javafx-swing/21/javafx-swing-21.jar" />
+  </library>
+  <library name="Maven: org.openjfx:javafx-web:21">
+    <archive path="C:/Users/Bastian/.m2/repository/org/openjfx/javafx-web/21/javafx-web-21.jar" />
+  </library>
+  <library name="Maven: org.junit.jupiter:junit-jupiter-api:5.10.2">
+    <archive path="C:/Users/Bastian/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.10.2/junit-jupiter-api-5.10.2.jar" />
+  </library>
+  <library name="Maven: org.junit.jupiter:junit-jupiter-engine:5.10.2">
+    <archive path="C:/Users/Bastian/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.10.2/junit-jupiter-engine-5.10.2.jar" />
+  </library>
+  <library name="Maven: org.apiguardian:apiguardian-api:1.1.2">
+    <archive path="C:/Users/Bastian/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar" />
+  </library>
+  <library name="Maven: org.junit.platform:junit-platform-engine:1.10.2">
+    <archive path="C:/Users/Bastian/.m2/repository/org/junit/platform/junit-platform-engine/1.10.2/junit-platform-engine-1.10.2.jar" />
+  </library>
+  <library name="Maven: org.openjfx:javafx-media:win:21">
+    <archive path="C:/Users/Bastian/.m2/repository/org/openjfx/javafx-media/21/javafx-media-21-win.jar" />
+  </library>
+  <library name="Maven: org.openjfx:javafx-swing:win:21">
+    <archive path="C:/Users/Bastian/.m2/repository/org/openjfx/javafx-swing/21/javafx-swing-21-win.jar" />
+  </library>
+  <library name="Maven: eu.hansolo.fx:countries:21.0.3">
+    <archive path="C:/Users/Bastian/.m2/repository/eu/hansolo/fx/countries/21.0.3/countries-21.0.3.jar" />
+  </library>
+  <library name="Maven: eu.hansolo.fx:heatmap:21.0.3">
+    <archive path="C:/Users/Bastian/.m2/repository/eu/hansolo/fx/heatmap/21.0.3/heatmap-21.0.3.jar" />
+  </library>
+  <library name="Maven: eu.hansolo:toolboxfx:21.0.3">
+    <archive path="C:/Users/Bastian/.m2/repository/eu/hansolo/toolboxfx/21.0.3/toolboxfx-21.0.3.jar" />
+  </library>
+  <library name="Maven: eu.hansolo:toolbox:21.0.5">
+    <archive path="C:/Users/Bastian/.m2/repository/eu/hansolo/toolbox/21.0.5/toolbox-21.0.5.jar" />
+  </library>
+  <library name="Maven: org.opentest4j:opentest4j:1.3.0">
+    <archive path="C:/Users/Bastian/.m2/repository/org/opentest4j/opentest4j/1.3.0/opentest4j-1.3.0.jar" />
+  </library>
+  <library name="Maven: org.junit.platform:junit-platform-commons:1.10.2">
+    <archive path="C:/Users/Bastian/.m2/repository/org/junit/platform/junit-platform-commons/1.10.2/junit-platform-commons-1.10.2.jar" />
+  </library>
+  <library name="Maven: org.openjfx:javafx-controls:win:21">
+    <archive path="C:/Users/Bastian/.m2/repository/org/openjfx/javafx-controls/21/javafx-controls-21-win.jar" />
+  </library>
+  <library name="Maven: org.openjfx:javafx-graphics:21">
+    <archive path="C:/Users/Bastian/.m2/repository/org/openjfx/javafx-graphics/21/javafx-graphics-21.jar" />
+  </library>
+  <library name="Maven: org.openjfx:javafx-graphics:win:21">
+    <archive path="C:/Users/Bastian/.m2/repository/org/openjfx/javafx-graphics/21/javafx-graphics-21-win.jar" />
+  </library>
+  <library name="Maven: org.openjfx:javafx-base:21">
+    <archive path="C:/Users/Bastian/.m2/repository/org/openjfx/javafx-base/21/javafx-base-21.jar" />
+  </library>
+  <library name="Maven: org.openjfx:javafx-base:win:21">
+    <archive path="C:/Users/Bastian/.m2/repository/org/openjfx/javafx-base/21/javafx-base-21-win.jar" />
+  </library>
+  <library name="Maven: org.openjfx:javafx-fxml:win:21">
+    <archive path="C:/Users/Bastian/.m2/repository/org/openjfx/javafx-fxml/21/javafx-fxml-21-win.jar" />
+  </library>
+  <library name="Maven: org.openjfx:javafx-web:win:21">
+    <archive path="C:/Users/Bastian/.m2/repository/org/openjfx/javafx-web/21/javafx-web-21-win.jar" />
+  </library>
+  <library name="Maven: org.openjfx:javafx-media:21">
+    <archive path="C:/Users/Bastian/.m2/repository/org/openjfx/javafx-media/21/javafx-media-21.jar" />
+  </library>
+  <library name="Python 3.12 (PhytonLearning) interpreter library">
+    <archive path="C:/Users/Bastian/AppData/Local/Programs/Python/Python312/DLLs" />
+    <archive path="C:/Users/Bastian/AppData/Local/Programs/Python/Python312/Lib" />
+    <archive path="C:/Users/Bastian/AppData/Local/Programs/Python/Python312" />
+    <archive path="C:/Users/Bastian/AppData/Local/JetBrains/IntelliJIdea2024.1/python_stubs/348842851" />
+  </library>
+</eclipse-userlibraries>
+
